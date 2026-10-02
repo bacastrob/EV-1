@@ -1,0 +1,78 @@
+
+:root {
+  --color-principal: #061b22;   
+  --color-acento: #2a9d8f;      
+  --color-fondo: #f5f7f8;       
+  --color-texto: #22303a;       
+}
+
+body {
+  background-color: var(--color-fondo);
+  color: var(--color-texto);
+  font-family: system-ui, "Segoe UI", "Roboto", Arial, sans-serif;
+
+  /* empuja el footer al fondo aunque haya poco contenido */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;   /* el main ocupa todo el espacio que sobra */
+}
+
+header,
+footer {
+  background-color: var(--color-principal) ;
+}
+
+header h1 {
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+aside {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 8px;
+  align-self: flex-start;   /* que no se estire hasta el largo del catálogo */
+}
+
+.tarjeta-producto {
+  border: 1px solid #dde3e6;
+  height: 100%;   /* todas las tarjetas de una fila quedan del mismo alto */
+}
+
+.tarjeta-producto img {
+  height: 200px;
+  object-fit: contain;   /* la foto se ve completa, sin deformarse */
+  padding: 1rem;
+}
+
+.tarjeta-producto:hover {
+  border-color: var(--color-acento);
+}
+
+.precio {
+  color: var(--color-acento);
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+
+/*BOTONES*/
+.btn-semicel {
+  background-color: var(--color-principal);
+  color: white;
+}
+
+.btn-semicel:hover {
+  background-color: var(--color-acento);
+  color: white;
+}
+
+.miniatura {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+}

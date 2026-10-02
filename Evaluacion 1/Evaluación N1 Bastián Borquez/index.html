@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SemiCel · Celulares seminuevos</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+  <header class="text-white py-3">
+    <div class="container d-flex justify-content-between align-items-center">
+      <h1 class="h3 m-0">SemiCel</h1>
+      <p class="m-0 small">Celulares seminuevos revisados y con garantía</p>
+    </div>
+  </header>
+
+  <nav class="navbar navbar-expand-md bg-body-tertiary border-bottom">
+    <div class="container">
+      <!-- Boton que aparece solo en pantallas chicas para abrir el menú -->
+      <button class="navbar-toggler" type="button"
+              data-bs-toggle="collapse" data-bs-target="#menu"
+              aria-controls="menu" aria-expanded="false" aria-label="Abrir menú">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="menu">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item"><a class="nav-link active" href="index.html">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" href="#catalogo">Catálogo</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
+        </ul>
+        <!-- Enlace a la pagina de inicio de sesión -->
+        <a class="btn btn-outline-dark" href="login.html">Iniciar sesión</a>
+
+        <button class="btn btn-semicel ms-2" data-bs-toggle="offcanvas" data-bs-target="#carrito">
+            Carrito (<span id="contadorCarrito">0</span>)
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container my-4">
+    <div class="row">
+
+      <aside class="col-md-3 mb-4">
+        <h2 class="h5">Filtrar</h2>
+
+        <label for="filtroMarca" class="form-label">Marca</label>
+        <select id="filtroMarca" class="form-select mb-3">
+          <option value="">Todas</option>
+          <option value="Apple">Apple</option>
+          <option value="Samsung">Samsung</option>
+          <option value="Xiaomi">Xiaomi</option>
+          <option value="Motorola">Motorola</option>
+        </select>
+
+        <label for="ordenPrecio" class="form-label">Ordenar por precio</label>
+        <select id="ordenPrecio" class="form-select">
+            <option value="">Ninguno</option>
+            <option value="menor">Menor a mayor</option>
+            <option value="mayor">Mayor a menor</option>
+        </select>
+
+      </aside>
+
+      <section id="catalogo" class="col-md-9">
+        <h2 class="h4 mb-3">Catálogo</h2>
+
+        <div id="listaProductos" class="row g-3"></div>
+      </section>
+
+    </div>
+  </main>
+
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="carrito" aria-labelledby="tituloCarrito">
+    <div class="offcanvas-header">
+        <h2 class="offcanvas-title h5" id="tituloCarrito">Tu carrito</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div id="listaCarrito"></div>
+        <p class="fw-bold mt-3">Total: $<span id="totalCarrito">0</span></p>
+        <button class="btn btn-semicel w-100" id="botonFinalizar">Finalizar compra</button>
+    </div>
+  </div>
+
+  <div class="modal fade" id="modalDetalle" tabindex="-1" aria-labelledby="tituloDetalle">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h2 class="modal-title h5" id="tituloDetalle"></h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+
+        <div class="modal-body">
+          <div class="row">
+            <!-- Columna izquierda: carrusel de fotos -->
+            <div class="col-md-6">
+              <div id="carruselDetalle" class="carousel slide">
+                <div class="carousel-inner" id="imagenesDetalle"></div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carruselDetalle" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon"></span>
+                  <span class="visually-hidden">Anterior</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carruselDetalle" data-bs-slide="next">
+                  <span class="carousel-control-next-icon"></span>
+                  <span class="visually-hidden">Siguiente</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- características y precio -->
+            <div class="col-md-6">
+              <ul class="list-unstyled" id="caracteristicasDetalle"></ul>
+              <p class="precio" id="precioDetalle"></p>
+              <button class="btn btn-semicel w-100" id="botonAgregarCarrito">Agregar al carrito</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="modalCompra" tabindex="-1" aria-labelledby="tituloCompra">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h2 class="modal-title h5" id="tituloCompra">Datos de compra</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+
+      <div class="modal-body">
+        <form id="formCompra" novalidate>
+
+          <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre completo</label>
+            <input type="text" id="nombre" class="form-control">
+            <div class="invalid-feedback" id="nombreError"></div>
+          </div>
+
+          <div class="mb-3">
+            <label for="correo" class="form-label">Correo</label>
+            <input type="email" id="correo" class="form-control" placeholder="nombre@correo.cl">
+            <div class="invalid-feedback" id="correoError"></div>
+          </div>
+
+          <div class="mb-3">
+            <label for="telefono" class="form-label">Celular</label>
+            <input type="tel" id="telefono" class="form-control" placeholder="912345678">
+            <div class="invalid-feedback" id="telefonoError"></div>
+          </div>
+
+          <div class="mb-3">
+            <label for="direccion" class="form-label">Dirección de despacho</label>
+            <input type="text" id="direccion" class="form-control">
+            <div class="invalid-feedback" id="direccionError"></div>
+          </div>
+
+          <div class="mb-3">
+            <label for="pago" class="form-label">Método de pago</label>
+            <select id="pago" class="form-select">
+              <option value="">Elige un método</option>
+              <option value="transferencia">Transferencia</option>
+              <option value="debito">Tarjeta de débito</option>
+              <option value="credito">Tarjeta de crédito</option>
+            </select>
+            <div class="invalid-feedback" id="pagoError"></div>
+          </div>
+
+          <p class="fw-bold">Total a pagar: $<span id="totalCompra">0</span></p>
+          <button type="submit" class="btn btn-semicel w-100">Confirmar compra</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+  <footer id="contacto" class="text-white py-3 mt-4">
+    <div class="container text-center small">
+      <p class="m-0">SemiCel · Celulares Seminuevos</p>
+      <p class="m-0">Dirección: Av. Principal 123, Santiago</p>
+      <p class="m-0">Teléfono: (56) 9 1234 5678</p>
+      <p class="m-0">contacto@semicel.cl</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script src="js/productos.js"></script>
+  <script src="js/tienda.js"></script>
+</body>
+</html>
